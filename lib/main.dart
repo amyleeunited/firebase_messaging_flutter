@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(new MyApp());
 
@@ -16,6 +17,8 @@ class _MyAppState extends State<MyApp> {
   FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
+
+//  final databaseReference = Firestore.instance;
 
   @override
   void initState() {
@@ -67,6 +70,9 @@ class _MyAppState extends State<MyApp> {
     databaseReference.child('fcm-token/${token}').set({"token": token});
     textValue = token;
     setState(() {});
+
+//    Firestore.instance.collection('books').document()
+//        .setData({ 'title': 'title', 'author': 'author' });
   }
 
   @override
@@ -81,11 +87,33 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               new Text(
                 textValue,
-              )
+              ),
+              RaisedButton(
+                child: Text('Create Record'),
+                onPressed: () {
+//                  createRecord();
+                },
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
+/*  void createRecord() async {
+    await databaseReference.collection("books")
+        .document("1")
+        .setData({
+      'title': 'Mastering Flutter',
+      'description': 'Programming Guide for Dart'
+    });
+
+    DocumentReference ref = await databaseReference.collection("books")
+        .add({
+      'title': 'Flutter in Action',
+      'description': 'Complete Programming Guide to learn Flutter'
+    });
+    print(ref.documentID);
+  }*/
 }
